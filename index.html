@@ -63,31 +63,81 @@
         
         .hidden { display: none !important; }
 
-        /* ==================== ANPASSUNG FÜR DEN DRUCK (KOMPAKT AUF 1 SEITE) ==================== */
+        /* ==================== INTEGRALER SEITENRAND-SCHUTZ IM DRUCK ==================== */
         @page { 
             size: A4 landscape; 
-            margin: 0.15cm 0.3cm; /* Ränder auf das absolute Minimum reduziert */
+            margin: 0.2cm; 
         }
         @media print {
             body { background: white; padding: 0 !important; margin: 0 !important; }
-            .container { box-shadow: none; padding: 0 !important; margin: 0 !important; max-width: 100%; width: 100%; }
-            h1 { font-size: 14px !important; margin-top: 0 !important; margin-bottom: 2px !important; }
+            
+            /* Drückt die Tabelle links und rechts um 8mm nach innen für einen sauberen Rand */
+            .container { 
+                box-shadow: none; 
+                padding: 0 8mm !important; 
+                margin: 0 auto !important; 
+                max-width: 100%; 
+                width: 100%; 
+                box-sizing: border-box !important;
+            }
+            
+            h1 { font-size: 18px !important; margin-top: 0 !important; margin-bottom: 6px !important; }
             .header-bar, .print-actions, .input-list, .reset-zone { display: none !important; }
             
             .print-grid { 
                 display: grid !important; 
                 grid-template-columns: 1fr 1fr !important; 
-                gap: 4px 10px !important; /* Vertikale Lücke radikal gekürzt, um Handy-Ränder auszugleichen */
+                grid-template-rows: 1fr 1fr !important;
+                height: 180mm !important; 
+                gap: 12px 20px !important; 
                 margin-top: 0 !important;
                 margin-bottom: 0 !important;
+                box-sizing: border-box !important;
+                transform-origin: top center !important;
             }
             
-            .day-block { padding: 4px 6px !important; border: 1px solid #475569 !important; border-radius: 4px !important; page-break-inside: avoid !important; }
-            .day-title { font-size: 10.5px !important; margin-bottom: 1px !important; padding-bottom: 1px !important; }
-            .stage-header-grid { grid-template-columns: 65px 1fr 65px 1fr !important; font-size: 8.5px !important; margin-bottom: 1px !important; }
-            .slot { grid-template-columns: 65px 1fr 65px 1fr !important; font-size: 9px !important; padding: 0.5px 0 !important; line-height: 1.1 !important; } /* Engere Zeilenhöhe schaufelt massig Platz frei */
-            .time-col { font-size: 8px !important; }
-            .artist-col { padding: 0.5px 2px !important; }
+            .day-block { 
+                display: flex !important;
+                flex-direction: column !important;
+                padding: 8px 12px !important; 
+                border: 1px solid #334155 !important; 
+                border-radius: 6px !important; 
+                page-break-inside: avoid !important; 
+                height: 100% !important;
+                box-sizing: border-box !important;
+            }
+            
+            .day-title { font-size: 12px !important; margin-top: 0 !important; margin-bottom: 4px !important; padding-bottom: 2px !important; }
+            .stage-header-grid { grid-template-columns: 75px 1fr 75px 1fr !important; font-size: 9.5px !important; margin-bottom: 4px !important; }
+            
+            .timetable { 
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: space-between !important; 
+                flex-grow: 1 !important; 
+                height: 100% !important;
+            }
+            
+            .slot { 
+                grid-template-columns: 75px 1fr 75px 1fr !important; 
+                font-size: 11px !important; 
+                padding: 0 !important; 
+                flex-grow: 1 !important; 
+                display: grid !important;
+                align-items: center !important;
+            }
+            
+            .time-col { font-size: 9.5px !important; }
+            .artist-col { padding: 3px 5px !important; font-size: 11px !important; }
+            
+            @media (max-width: 767px) {
+                .print-grid { 
+                    height: 195mm !important; 
+                    transform: scale(0.85) !important; 
+                    width: 118% !important; 
+                }
+            }
+
             * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
         }
     </style>
@@ -110,7 +160,6 @@
         </a>
     </div>
 
-    <!-- Modus 1: Chronologische Auswahl -->
     <div id="input-view" class="input-list">
         <div id="bands-container"></div>
         <div class="reset-zone">
@@ -118,7 +167,6 @@
         </div>
     </div>
 
-    <!-- Modus 2: Das optimierte 2-Reihen-Raster -->
     <div id="print-view" class="hidden">
         <div class="print-actions">
             <button class="btn-print" onclick="window.print()">Jetzt Drucken / Als PDF speichern</button>
