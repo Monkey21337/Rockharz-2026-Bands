@@ -66,29 +66,28 @@
         /* ==================== ANPASSUNG FÜR DEN DRUCK (KOMPAKT AUF 1 SEITE) ==================== */
         @page { 
             size: A4 landscape; 
-            margin: 0.2cm 0.4cm; 
+            margin: 0.15cm 0.3cm; /* Ränder auf das absolute Minimum reduziert */
         }
         @media print {
-            body { background: white; padding: 0; margin: 0; }
-            .container { box-shadow: none; padding: 0; max-width: 100%; width: 100%; }
-            h1 { font-size: 16px !important; margin-top: 0 !important; margin-bottom: 4px !important; }
+            body { background: white; padding: 0 !important; margin: 0 !important; }
+            .container { box-shadow: none; padding: 0 !important; margin: 0 !important; max-width: 100%; width: 100%; }
+            h1 { font-size: 14px !important; margin-top: 0 !important; margin-bottom: 2px !important; }
             .header-bar, .print-actions, .input-list, .reset-zone { display: none !important; }
             
-            /* Zwingt den Drucker IMMER zu 2 Spalten nebeneinander, egal ob Handy oder PC */
             .print-grid { 
                 display: grid !important; 
                 grid-template-columns: 1fr 1fr !important; 
-                gap: 6px 15px !important; 
+                gap: 4px 10px !important; /* Vertikale Lücke radikal gekürzt, um Handy-Ränder auszugleichen */
                 margin-top: 0 !important;
                 margin-bottom: 0 !important;
             }
             
-            .day-block { padding: 6px !important; border: 1px solid #475569 !important; border-radius: 4px !important; page-break-inside: avoid !important; }
-            .day-title { font-size: 11px !important; margin-bottom: 2px !important; padding-bottom: 1px !important; }
-            .stage-header-grid { grid-template-columns: 68px 1fr 68px 1fr !important; font-size: 9px !important; margin-bottom: 2px !important; }
-            .slot { grid-template-columns: 68px 1fr 68px 1fr !important; font-size: 10px !important; padding: 1px 0 !important; }
-            .time-col { font-size: 9px !important; }
-            .artist-col { padding: 1px 3px !important; }
+            .day-block { padding: 4px 6px !important; border: 1px solid #475569 !important; border-radius: 4px !important; page-break-inside: avoid !important; }
+            .day-title { font-size: 10.5px !important; margin-bottom: 1px !important; padding-bottom: 1px !important; }
+            .stage-header-grid { grid-template-columns: 65px 1fr 65px 1fr !important; font-size: 8.5px !important; margin-bottom: 1px !important; }
+            .slot { grid-template-columns: 65px 1fr 65px 1fr !important; font-size: 9px !important; padding: 0.5px 0 !important; line-height: 1.1 !important; } /* Engere Zeilenhöhe schaufelt massig Platz frei */
+            .time-col { font-size: 8px !important; }
+            .artist-col { padding: 0.5px 2px !important; }
             * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
         }
     </style>
@@ -121,7 +120,6 @@
 
     <!-- Modus 2: Das optimierte 2-Reihen-Raster -->
     <div id="print-view" class="hidden">
-        <!-- Neuer Button OBEN -->
         <div class="print-actions">
             <button class="btn-print" onclick="window.print()">Jetzt Drucken / Als PDF speichern</button>
         </div>
@@ -133,7 +131,6 @@
             <div class="day-block"><div class="day-title">Samstag, 04.07.</div><div class="stage-header-grid"><div>Zeit</div><div>Rock Stage</div><div>Zeit</div><div>Dark Stage</div></div><div class="timetable" id="slots-sat"></div></div>
         </div>
         
-        <!-- Button UNTEN bleibt -->
         <div class="print-actions">
             <button class="btn-print" onclick="window.print()">Jetzt Drucken / Als PDF speichern</button>
         </div>
