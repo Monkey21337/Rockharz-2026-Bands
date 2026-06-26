@@ -37,8 +37,12 @@
         .btn-reset { padding: 10px 20px; background-color: #71717a; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; transition: 0.2s; }
         .btn-reset:hover { background-color: #4b5563; }
 
-        /* Bildschirm-Raster (2x2) */
-        .print-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+        /* Bildschirm-Raster: Am Handy untereinander, am PC nebeneinander */
+        .print-grid { display: grid; grid-template-columns: 1fr; gap: 20px; margin-top: 15px; margin-bottom: 15px; }
+        @media (min-width: 768px) {
+            .print-grid { grid-template-columns: 1fr 1fr; }
+        }
+        
         .day-block { background: #fff; border: 1px solid #e4e4e7; border-radius: 8px; padding: 12px; }
         .day-title { font-size: 14px; font-weight: bold; text-transform: uppercase; border-bottom: 2px solid #3f3f46; padding-bottom: 3px; margin-bottom: 8px; color: #1a3a2a; }
         
@@ -54,7 +58,7 @@
         .bg-vielleicht { background-color: #fef9c3 !important; color: #713f12 !important; font-weight: bold; }
         .bg-nein { background-color: #fee2e2 !important; color: #b91c1c !important; text-decoration: line-through; opacity: 0.5; }
 
-        .print-actions { text-align: center; margin-top: 30px; }
+        .print-actions { text-align: center; padding: 10px 0; }
         .btn-print { padding: 15px 40px; font-size: 18px; background: #16a34a; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         
         .hidden { display: none !important; }
@@ -62,7 +66,7 @@
         /* ==================== ANPASSUNG FÜR DEN DRUCK (KOMPAKT AUF 1 SEITE) ==================== */
         @page { 
             size: A4 landscape; 
-            margin: 0.2cm 0.4cm; /* Oben/unten noch weniger Rand */
+            margin: 0.2cm 0.4cm; 
         }
         @media print {
             body { background: white; padding: 0; margin: 0; }
@@ -70,11 +74,13 @@
             h1 { font-size: 16px !important; margin-top: 0 !important; margin-bottom: 4px !important; }
             .header-bar, .print-actions, .input-list, .reset-zone { display: none !important; }
             
+            /* Zwingt den Drucker IMMER zu 2 Spalten nebeneinander, egal ob Handy oder PC */
             .print-grid { 
                 display: grid !important; 
                 grid-template-columns: 1fr 1fr !important; 
-                gap: 6px 15px !important; /* Lücken extrem verkleinert */
+                gap: 6px 15px !important; 
                 margin-top: 0 !important;
+                margin-bottom: 0 !important;
             }
             
             .day-block { padding: 6px !important; border: 1px solid #475569 !important; border-radius: 4px !important; page-break-inside: avoid !important; }
@@ -115,13 +121,22 @@
 
     <!-- Modus 2: Das optimierte 2-Reihen-Raster -->
     <div id="print-view" class="hidden">
+        <!-- Neuer Button OBEN -->
+        <div class="print-actions">
+            <button class="btn-print" onclick="window.print()">Jetzt Drucken / Als PDF speichern</button>
+        </div>
+
         <div class="print-grid">
             <div class="day-block"><div class="day-title">Mittwoch, 01.07.</div><div class="stage-header-grid"><div>Zeit</div><div>Rock Stage</div><div>Zeit</div><div>Dark Stage</div></div><div class="timetable" id="slots-wed"></div></div>
             <div class="day-block"><div class="day-title">Donnerstag, 02.07.</div><div class="stage-header-grid"><div>Zeit</div><div>Rock Stage</div><div>Zeit</div><div>Dark Stage</div></div><div class="timetable" id="slots-thu"></div></div>
             <div class="day-block"><div class="day-title">Freitag, 03.07.</div><div class="stage-header-grid"><div>Zeit</div><div>Rock Stage</div><div>Zeit</div><div>Dark Stage</div></div><div class="timetable" id="slots-fri"></div></div>
             <div class="day-block"><div class="day-title">Samstag, 04.07.</div><div class="stage-header-grid"><div>Zeit</div><div>Rock Stage</div><div>Zeit</div><div>Dark Stage</div></div><div class="timetable" id="slots-sat"></div></div>
         </div>
-        <div class="print-actions"><button class="btn-print" onclick="window.print()">Jetzt Drucken / Als PDF speichern</button></div>
+        
+        <!-- Button UNTEN bleibt -->
+        <div class="print-actions">
+            <button class="btn-print" onclick="window.print()">Jetzt Drucken / Als PDF speichern</button>
+        </div>
     </div>
 </div>
 
